@@ -9,7 +9,7 @@ const alerts = [
   {
     number: 2,
     title: "Urgent Earthquake Warning",
-    body: "An earthquake with a magnitude of [magnitude] has just occurred in your vicinity. If you are indoors, drop to the ground, take cover under a table or desk, and hold on. If you are outdoors, move to an open area away from buildings and other structures. Follow all emergency instructions and be prepared for additional seismic activity.",
+    body: "An earthquake with a magnitude of 8.0 has just occurred in your vicinity. If you are indoors, drop to the ground, take cover under a table or desk, and hold on. If you are outdoors, move to an open area away from buildings and other structures. Follow all emergency instructions and be prepared for additional seismic activity.",
   },
   {
     number: 3,
@@ -20,7 +20,7 @@ const alerts = [
 
 export const AlertsPage = () => (
   <ScrollView style={{ flex: 1 }}>
-    <View style={{ flex: 1, backgroundColor: "#161819" }}>
+    <View style={{ flex: 1, backgroundColor: "#161819", paddingBottom: 10 }}>
       {alerts.map((alert) => (
         <View style={styles.container} key={alert.number}>
           <View style={styles.card}>
