@@ -1,9 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Dimensions, useWindowDimensions } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  useWindowDimensions,
+} from "react-native";
 import logo from "./assets/logo.png";
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import React from 'react';
-import { WarningPage } from './screens/WarningPage';
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import React from "react";
+import { WarningPage } from "./screens/WarningPage";
+import { AlertsPage } from "./screens/AlertsPage";
 
 // const [loaded] = useFonts({
 //   Untitled: require("./assets/fonts/TestUntitledSans-Regular.otf"),
@@ -12,19 +20,17 @@ import { WarningPage } from './screens/WarningPage';
 // });
 
 const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: '#ff4081' }} />
+  <View style={{ flex: 1, backgroundColor: "#ff4081" }} />
 );
 
 const SecondRoute = () => (
-  <View style={{ flex: 1, backgroundColor: '#673ab7' }} />
+  <View style={{ flex: 1, backgroundColor: "#673ab7" }} />
 );
 
 const renderScene = SceneMap({
   first: WarningPage,
-  second: SecondRoute,
+  second: AlertsPage,
 });
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -42,7 +48,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     backgroundColor: "#1F1F1F",
     justifyContent: "center",
-    alignItems: 'center',
+    alignItems: "center",
     width: Dimensions.get("window").width,
     height: 50,
 
@@ -50,27 +56,33 @@ const styles = StyleSheet.create({
   },
 });
 
-const renderTabBar = props => (
+const renderTabBar = (props) => (
   <TabBar
     {...props}
     // tabStyle={{backgroundColor: 'red'}}
-    labelStyle={{ textTransform: 'none', fontSize: 16 }}
-    indicatorStyle={{ backgroundColor: '#F4B000', height: 5, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
+    labelStyle={{ textTransform: "none", fontSize: 16 }}
+    indicatorStyle={{
+      backgroundColor: "#F4B000",
+      height: 5,
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+    }}
     style={{
-      backgroundColor: '#1F1F1F', width: "80%", marginLeft: "auto", marginRight: "auto"
+      backgroundColor: "#1F1F1F",
+      width: "80%",
+      marginLeft: "auto",
+      marginRight: "auto",
     }}
   />
 );
-
-
 
 export default function App() {
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'first', title: 'Warning' },
-    { key: 'second', title: 'Alerts' },
+    { key: "first", title: "Warning" },
+    { key: "second", title: "Alerts" },
   ]);
 
   return (
@@ -86,10 +98,7 @@ export default function App() {
           onIndexChange={setIndex}
           initialLayout={{ width: layout.width }}
         />
-
-
       </View>
     </>
   );
 }
-
