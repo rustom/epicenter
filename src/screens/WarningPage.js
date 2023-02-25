@@ -9,8 +9,6 @@ import {
 import { Progress } from "../components/Progress";
 import { Ring } from "../components/Ring";
 
-import Timer from "../components/Timer";
-
 const steps = [
   {
     number: 1,
@@ -28,6 +26,7 @@ const time = "2:59";
 
 export const WarningPage = () => {
   const [safe, setSafe] = useState(false);
+  const [ring, setRing] = useState(false);
   const [timeout, setTimeout] = useState(false);
 
   return (
@@ -70,7 +69,11 @@ export const WarningPage = () => {
             })}
           </View>
 
-          {timeout ? <Ring /> : <Progress setTimeout={setTimeout} />}
+          {timeout ? (
+            <Ring safe={safe} setRingPlease={setRing} />
+          ) : (
+            <Progress setTimeout={setTimeout} />
+          )}
 
           <TouchableOpacity onPress={() => setSafe(!safe)}>
             <View

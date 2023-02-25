@@ -9,18 +9,25 @@ import {
 } from "react-native";
 import { SvgXml } from "react-native-svg";
 
-export const Ring = () => {
+export const Ring = ({ safe, setRingPlease }) => {
   const [ring, setRing] = useState(false);
+  setRingPlease(ring);
 
   return (
     <View style={styles.ringContainer}>
-      <Text style={styles.ringText}>
-        {ring ? "Your phone is ringing" : "Your phone is not ringing"}
-      </Text>
+      {safe ? (
+        <Text style={styles.safeText}>We marked you as safe!</Text>
+      ) : (
+        <>
+          <Text style={styles.ringText}>
+            {ring ? "Your phone is ringing" : "Your phone is not ringing"}
+          </Text>
 
-      <TouchableOpacity onPress={() => setRing(!ring)}>
-        <SvgXml xml={ring ? unmuted : muted} width={42} height={42} />
-      </TouchableOpacity>
+          <TouchableOpacity onPress={() => setRing(!ring)}>
+            <SvgXml xml={ring ? unmuted : muted} width={42} height={42} />
+          </TouchableOpacity>
+        </>
+      )}
     </View>
   );
 };
@@ -63,5 +70,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     bottom: 5,
     flexGrow: 1,
+  },
+  safeText: {
+    fontSize: 15,
+    color: "#fff",
+    fontWeight: "bold",
+    bottom: 5,
+    flexGrow: 1,
+    paddingBottom: 40,
   },
 });
