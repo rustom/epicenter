@@ -1,70 +1,95 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
-// import { GlobalStyle } from './styles/global-style';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, Text, View, Image, Dimensions, useWindowDimensions } from 'react-native';
+import logo from "./assets/logo.png";
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import React from 'react';
+import { WarningPage } from './screens/WarningPage';
+
+// const [loaded] = useFonts({
+//   Untitled: require("./assets/fonts/TestUntitledSans-Regular.otf"),
+//   Untitled_Bold: require("./assets/fonts/TestUntitledSans-Bold.otf"),
+//   Untitled_Medium: require("./assets/fonts/unbounded/TestUntitledSans-Medium.otf"),
+// });
+
+const FirstRoute = () => (
+  <View style={{ flex: 1, backgroundColor: '#ff4081' }} />
+);
+
+const SecondRoute = () => (
+  <View style={{ flex: 1, backgroundColor: '#673ab7' }} />
+);
+
+const renderScene = SceneMap({
+  first: WarningPage,
+  second: SecondRoute,
+});
 
 
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    paddingTop: 50,
-    alignItems: 'center',
-    backgroundColor: '#161819',
-    // color: '#ffffff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#1F1F1F",
+    flex: 1,
   },
-  stretch: {
-    // width: 100,
-    // height: 100,
-    resizeMode: 'contain',
+  icon: {
+    height: 20,
+    width: "100px",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
-  logoContainer: {
-    height: 50, 
-    backgroundColor: 'white',
-  }, 
+  background: {
+    paddingTop: 60,
+    paddingBottom: 20,
+    backgroundColor: "#1F1F1F",
+    justifyContent: "center",
+    alignItems: 'center',
+    width: Dimensions.get("window").width,
+    height: 50,
+
+    // borderBottomColor: "#fff",
+  },
 });
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
+const renderTabBar = props => (
+  <TabBar
+    {...props}
+    // tabStyle={{backgroundColor: 'red'}}
+    labelStyle={{ textTransform: 'none', fontSize: 16 }}
+    indicatorStyle={{ backgroundColor: '#F4B000', height: 5, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
+    style={{
+      backgroundColor: '#1F1F1F', width: "80%", marginLeft: "auto", marginRight: "auto"
+    }}
+  />
+);
 
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
-const Tab = createBottomTabNavigator();
 
 
 export default function App() {
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'first', title: 'Warning' },
+    { key: 'second', title: 'Alerts' },
+  ]);
+
   return (
-    // <>
-      <View style={styles.container}>
-        <View style={styles.logoContainer}>
-          <Image styles={styles.stretch} source={require('./assets/splash.png')} />
-        </View>
-        <Text style={{ color: '#adadad' }}>Open up App.js to start working on your app!</Text>
-        {/* <StatusBar style="auto" /> */}
-        <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <>
+      <View style={styles.background}>
+        <Image styles={styles.icon} source={logo} />
       </View>
-    // </>
+      <View style={styles.container}>
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          renderTabBar={renderTabBar}
+          onIndexChange={setIndex}
+          initialLayout={{ width: layout.width }}
+        />
+
+
+      </View>
+    </>
   );
 }
 
